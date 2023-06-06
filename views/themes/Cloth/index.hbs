@@ -1,0 +1,122 @@
+{{> themes/Cloth/front-menu}}
+<div class="productsWrapper col-sm-12 col-md-8 offset-md-2">
+    {{#if filtered}}
+        <div class="product-layout product-results col-sm-12">
+            {{#ifCond @root.paginateUrl '==' 'category'}}
+            <h1>{{ @root.__ "Categoria" }}: <strong>{{@root.searchTerm}}</strong></h1>
+            {{else}}
+            <h1>{{ @root.__ "Resultado de la búsqueda" }}: <strong>{{@root.searchTerm}}</strong></h1>
+            {{/ifCond}}
+        </div>
+    {{/if}} 
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+  <ol class="carousel-indicators">
+    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+  </ol>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img class="d-block w-100" src="/images/others/store.jpg" alt="First slide">
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100" src="/images/others/travel.jpg" alt="Second slide">
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100" src="/images/others/menu2.jpg" alt="Third slide">
+    </div>
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+
+<div class="parallax" style="opacity: 1 !important;"> 
+        <div class="col-sm-12 text-center" style="padding-top: 11px !important; margin-top: 4rem !important; color: white !important; font-weight: bolder !important; margin-bottom: 4rem !important;">
+            <h1 style="margin-top: 5rem !important; margin-bottom: 5rem !important;">Nuestros productos</h1>
+ 
+ </div>
+ </div>
+    <div class="row product-layout">
+        
+        {{#ifCond results.length '==' 0}}
+            <div class="col-sm-12">
+                <p class="text-danger">{{ @root.__ "No products found" }}</p>
+            </div>
+        {{/ifCond}}
+        {{#each results}}
+            <div class="{{perRowClass ../config.productsPerRow}}">
+                <div class="thumbnail">
+                    {{#if productPermalink}}
+                        <div class="product-wrapper">
+                            <a href="/product/{{this.productPermalink}}">
+                                <div class="vertical-center img-thumbnail">
+                                    {{#if productImage}}
+                                        <img class="img-fluid" src="{{this.productImage}}" alt="...">
+                                    {{else}}
+                                        <img class="img-fluid" src="/uploads/placeholder.png" alt="...">
+                                    {{/if}}
+                                </div>
+                                <h3 class="product-title product-title-home top-pad-10">
+                                    {{this.productTitle}}
+                                </h3>
+                            </a>
+                        </div>
+                    {{else}}
+                        <a href="/product/{{this._id}}">
+                            <div class="vertical-center img-thumbnail">
+                                {{#if productImage}}
+                                    <img class="img-fluid" src="{{this.productImage}}" alt="...">
+                                {{else}}
+                                    <img class="img-fluid" src="/uploads/placeholder.png" alt="...">
+                                {{/if}}
+                            </div>
+                            <h3 class="product-title product-title-home top-pad-10">
+                                {{this.productTitle}}
+                            </h3>
+                        </a>
+                    {{/if}}
+                    {{#if variants}}
+                        <div class="col-md-12">
+                            {{#if @root.config.showHomepageVariants}}
+                            <select id="productVariant-{{this._id}}" class="productVariant form-control mb-2">
+                            {{#each variants}}
+                                <option value="{{this._id}}" data-price="{{this.price}}">{{this.title}} - {{currencySymbol @root.config.currencySymbol}}{{this.price}}</option>
+                            {{/each}}
+                            </select>
+                            {{else}}
+                            <h4 class="product-price mp-0 text-center">
+                                {{currencySymbol @root.config.currencySymbol}}{{formatAmount variants.0.price}}
+                            </h4>
+                            {{/if}}
+                        </div>
+                    {{else}}
+                        <h4 class="product-price mp-0 text-center">
+                            {{currencySymbol @root.config.currencySymbol}}{{formatAmount productPrice}}
+                        </h4>
+                    {{/if}}
+                    <p class="text-center">
+                        {{#if @root.config.showHomepageVariants}}
+                        <a class="btn btn-primary add-variant-to-cart" data-id="{{this._id}}" role="button">{{ @root.__ "Add to cart" }}</a>
+                        {{else}}
+                        <a class="btn btn-primary add-to-cart" data-id="{{this._id}}" data-link="{{this.productPermalink}}" data-has-variants="{{checkProductVariants this.variants}}" role="button">{{ @root.__ "Add to cart" }}</a>
+                        {{/if}}
+                    </p>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</div>
+<input type="hidden" id="itemsPerPage" value="{{productsPerPage}}" >
+<input type="hidden" id="pageNum" value="{{pageNum}}">
+<input type="hidden" id="totalItemCount" value="{{totalProductCount}}">
+<input type="hidden" id="paginateUrl" value="{{paginateUrl}}">
+<input type="hidden" id="searchTerm" value="{{searchTerm}}">
+<div class="col-md-12">
+    <div id="pager" class="d-flex justify-content-center"></div>
+</div>

@@ -1,0 +1,24 @@
+<nav id="navbarMenu" class="navbar-expand-lg navbar navbar-light bg-light navbarMenuWrapper col-sm-12">
+    <div class="col-sm-8 offset-md-2 collapse navbar-collapse" id="navbarMenu">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item {{#unless searchTerm}}active{{/unless}}"><a class="nav-link" href="/">Inicio</a></li>
+            {{#each menu.items}}
+                <li class="nav-item"
+                    {{#menuMatch this.title @root.searchTerm}}{{/menuMatch}}
+                    {{#menuMatch this.title @root.title}}{{/menuMatch}}>
+                    <a class="nav-link" href="{{this.link}}">{{this.title}}</a>
+                </li>
+            {{/each}}
+        </ul>
+        <div class="col-sm-8 justify-content-center">
+        <form class="form-inline d-flex">
+            <div class="input-group" style="width: 48% !important;">
+                <input class="form-control" name="frm_search" id="frm_search" type="search" placeholder="{{ @root.__ "Buscar" }}" aria-label="Search">
+                <div class="input-group-append">
+                    <button class="btn btn-success" id="btn_search" type="submit"><strong>{{ @root.__ "Buscar" }}</strong></button>
+                </div>
+            </div>
+        </form>
+        </div>
+    </div>
+</nav>

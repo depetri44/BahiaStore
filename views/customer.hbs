@@ -1,0 +1,87 @@
+{{> partials/menu}}
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+    <form method="post" class="form-horizontal" id="customer-form" role="form" data-toggle="validator" novalidate="false">
+        <div class="col-sm-12">
+            <div class="page-header">
+                <div class="btn-group float-right" role="group" aria-label="Basic example">
+                    <button class="btn btn-outline-success" id="updateCustomer">Guardar Cliente</button>
+                    <button id="deleteCustomer" onclick="return confirm('¿Está seguro de que desea eliminar este cliente??');" class="btn btn-outline-danger">Eliminar Cliente</button>
+                </div>
+                <h2>Clientes</h2>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="form-group">
+            <label class="control-label">Email *</label>            
+                <input type="text" class="form-control" name="email" id="email" value={{result.email}} required>
+            </div>
+        </div>
+        <div class="col-sm-5">
+            <div class="form-group">
+            <label class="control-label">{{ @root.__ "Nombre de la Insitución / Empresa" }} *</label>
+                <input type="text" class="form-control" name="firstName" id="firstName" value={{result.firstName}} required>
+            </div>
+        </div>
+        <div class="col-sm-5">
+            <div class="form-group">
+            <label class="control-label">{{ @root.__ "Responsable de compra" }} *</label>
+                <input type="text" class="form-control" name="lastName" id="lastName" value={{result.lastName}} required>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="form-group">
+            <label class="control-label">{{ @root.__ "Dirección 1" }} *</label>   
+                <input type="text" class="form-control" name="address1" id="address1" value={{result.address1}} required>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="form-group">
+            <label class="control-label">{{ @root.__ "Dirección 2" }}</label>
+                <input type="text" class="form-control" name="address2" id="address2" value={{result.address2}}>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="form-group">
+            <label class="control-label">{{ @root.__ "País" }} *</label>
+                <select class="form-control" id="country" name="country" required>
+                    <option value="" disabled selected>Select Country</option>
+                    {{#each countryList}}
+                    <option {{selectState this @root.result.country}} value="{{this}}">{{this}}</option>
+                    {{/each}}
+                </select>
+            </div>
+        </div>
+        <div class="col-sm-5">
+            <div class="form-group">
+            <label class="control-label">{{ @root.__ "Provincia" }} *</label>
+                <input type="text" class="form-control" name="state" id="state" value={{result.state}} required>
+            </div>
+        </div>
+        <div class="col-sm-5">
+            <div class="form-group">
+            <label class="control-label">{{ @root.__ "Codigo Postál" }} *</label>
+                <input type="text" class="form-control" name="postcode" id="postcode" value={{result.postcode}} required>
+            </div>
+        </div>
+        <div class="col-sm-5">
+            <div class="form-group">
+            <label class="control-label">{{ @root.__ "Teléfono" }} *</label>
+                <input type="text" class="form-control" name="phone" id="phone" value={{result.phone}} required>
+            </div>
+        </div>
+        <div class="col-sm-5">
+            <div class="form-group">
+            <label class="control-label">{{ @root.__ "Contraseña" }}</label>
+                <input type="password" class="form-control" name="password" id="password">
+                <p class="help-block">Complete solo si desea restablecer la contraseña de los clientes</p>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="form-group">
+            <label class="control-label">{{ @root.__ "Fecha de Creación" }}</label>
+                <input type="text" class="form-control" value="{{formatDate result.created "DD/MM/YYYY hh:mmA"}}" readonly>
+            </div>
+        </div>
+        <input type="hidden" name="customerId" id="customerId" value="{{result._id}}">
+    </form>
+</main>
